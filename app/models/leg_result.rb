@@ -1,7 +1,6 @@
 class LegResult
   include Mongoid::Document
   field :secs, type: Float
-  field :event, type: Event
 
   embeds_one 'event', as: :parent
   embedded_in 'entrant'
@@ -12,6 +11,7 @@ class LegResult
   end
 
   after_initialize do |doc|
+    calc_ave
   end
 
   def secs=(value)

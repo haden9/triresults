@@ -3,8 +3,12 @@ class RunResult < LegResult
 
   def calc_ave
     if event && secs
-      meters = event.meters
-      my_ave = meters.nil? ? nil : 12.1
+      self[:mmile] = (secs / 60) / event.miles
     end
+  end
+
+  def secs=(value)
+    super
+    calc_ave
   end
 end
