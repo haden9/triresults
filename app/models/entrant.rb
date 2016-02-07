@@ -8,10 +8,16 @@ class Entrant
   field :gender, type: Placing
   field :group, type: Placing
 
+  attr_accessor :the_race
+
   embeds_many :results, class_name: 'LegResult', after_add: :update_total
   embeds_one :race, class_name: 'RaceRef'
 
   def update_total(result)
     self.secs = results.sum(:secs) if result
+  end
+
+  def the_race
+    self.race.race
   end
 end
