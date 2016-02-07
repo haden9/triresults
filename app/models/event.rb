@@ -7,6 +7,8 @@ class Event
 
   embedded_in :parent, polymorphic: true, touch: true
 
+  validates :order, :name, presence: true
+
   def meters
     case units
     when 'yards' || 'yard' then
