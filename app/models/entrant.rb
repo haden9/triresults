@@ -9,6 +9,7 @@ class Entrant
   field :group, type: Placing
 
   embeds_many :results, class_name: 'LegResult', after_add: :update_total
+  embeds_one :race, class_name: 'RaceRef'
 
   def update_total(result)
     self.secs = results.sum(:secs) if result
