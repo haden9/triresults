@@ -12,5 +12,5 @@ class Race
   scope :upcoming, -> {where(:date.gte => Date.current)}
   scope :past, -> {where(:date.lt => Date.current)}
 
-  has_many :entrants, foreign_key: 'race._id', dependent: :delete
+  has_many :entrants, foreign_key: 'race._id', dependent: :delete, order: [:secs.asc, :bib.asc]
 end
