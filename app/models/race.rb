@@ -37,12 +37,6 @@ class Race
     end
   end
 
-  def self.default
-    Race.new do |race|
-      DEFAULT_EVENTS.keys.each {|leg| race.send("#{leg}")}
-    end
-  end
-
   ATTRIBUTES.each do |action|
     define_method("#{action}") do
       self.location ? self.location.send("#{action}") : nil
@@ -52,6 +46,12 @@ class Race
       object = self.location ||= Address.new
       object.send("#{action}=", name)
       self.location = object
+    end
+  end
+
+  def self.default
+    Race.new do |race|
+      DEFAULT_EVENTS.keys.each {|leg| race.send("#{leg}")}
     end
   end
 end
