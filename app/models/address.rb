@@ -5,19 +5,19 @@ class Address
     @city = city
     @state = state
     if location && location.present?
-      @location =  Point.new(location[:latitude], location[:longitude])
+      @location =  Point.new(location[:coordinates][0], location[:coordinates][1])
     else
       @location = location
     end
   end
 
   def mongoize
-    {city: @city, state: @state, loc: @location}
+    {city: @city, state: @state, loc: Point.mongoize(@location)}
   end
 
   def self.mongoize(object)
    case object
-   when self.class then
+   when Address then
      object.mongoize
    when nil then
      nil
@@ -29,7 +29,7 @@ class Address
   def self.demongoize(object)
     case object
     when Hash then
-      Address.new(city, state, location)
+      Address.new(object[:city], object[:state], object[:loc])
     when nil then
       nil
     else

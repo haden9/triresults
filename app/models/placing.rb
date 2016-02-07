@@ -12,7 +12,7 @@ class Placing
 
   def self.mongoize(object)
     case object
-    when self.class then
+    when Placing then
       object.mongoize
     when nil
       nil
