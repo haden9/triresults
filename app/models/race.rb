@@ -68,7 +68,7 @@ class Race
     entrant_clone.racer = racer.info.attributes
     entrant_clone.group = self.get_group(racer)
     self.events.each do |event|
-      entrant_clone.send("#{event.name}", event)
+      entrant_clone.send("#{event.name}=", event)
     end
 
     if entrant_clone.validate
