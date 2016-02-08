@@ -56,6 +56,12 @@ class Race
     end
   end
 
+  def self.upcoming_available_to racer
+    upcoming_race_ids = racer.races.upcoming.pluck(:race).map{|r| r[:_id]}
+    all_race_ids = Race.upcoming.map{|r| r[:_id]}
+    self.in(:_id => (all_race_ids - upcoming_race_ids))
+  end
+
   def create_entrant(racer)
     entrant_clone = Entrant.new
     entrant_clone.race = self.attributes.symbolize_keys.slice(:_id, :n, :date)
