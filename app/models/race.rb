@@ -56,6 +56,22 @@ class Race
     end
   end
 
+  def create_entrant(racer)
+    entrant_clone = Entrant.new
+    entrant_clone.race = self.attributes.symbolize_keys.slice(:_id, :n, :date)
+    entrant_clone.racer = racer.info.attributes
+    entrant_clone.group = self.get_group(racer)
+    self.events.each do |event|
+      entrant_clone.send("#{event.name}", event)
+    end
+
+    if entrant_clone.validate
+      entrant_clone.bib = next_bib
+      entrant_clone.save
+    end
+    entrant_clone
+  end
+
   def next_bib
     self.inc(next_bib: 1)
     self[:next_bib]
