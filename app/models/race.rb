@@ -6,6 +6,12 @@ class Race
   field :date, type: Date
   field :loc, type: Address, as: :location
   field :events, type: Event
+  field :next_bib, type: Integer, default: 0
+
+  def next_bib
+    self.inc(next_bib: 1)
+    self[:next_bib]
+  end
 
   embeds_many :events, as: :parent, order: [:order.asc]
 
